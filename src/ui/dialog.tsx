@@ -56,7 +56,8 @@ export const Dialog = React.forwardRef<React.ComponentRef<"div">, React.Componen
             padding: 20,
             background: "white",
             borderRadius: 12,
-            width: "320px",
+            width: "fit-content",
+            maxWidth: "90vw",
           }}
           role="dialog"
         />

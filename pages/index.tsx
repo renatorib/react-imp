@@ -1,6 +1,6 @@
 import React from "react";
 
-import { ImpRenderer, alert, confirm } from "../src";
+import { ImpRenderer, alert, confirm, custom } from "../src";
 
 const onConfirm = () => console.log("Confirmed");
 const onCancel = () => console.log("Canceled");
@@ -35,6 +35,19 @@ export default function App() {
           }
         >
           confirm
+        </button>
+
+        <button
+          onClick={() =>
+            custom((dialog) => (
+              <span>
+                Custom and <b>bold</b>
+                <button onClick={dialog.close}>Close</button>
+              </span>
+            ))
+          }
+        >
+          custom
         </button>
       </div>
 
