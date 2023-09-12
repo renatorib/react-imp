@@ -1,35 +1,13 @@
-export type AlertDialog = {
-  type: "alert";
-  title?: string;
-  message: string;
-  onClose?: Function;
+export type Dialog<P = any> = {
+  id: string;
+  createdAt: number;
+  props: P;
+  Component: (props: DialogProps<P>) => JSX.Element;
 };
 
-export type ConfirmDialog = {
-  type: "confirm";
-  title?: string;
-  message: string;
-  onConfirm: Function;
-  onCancel?: Function;
-  onClose?: Function;
-};
+export type DialogOptions<P = any> = { props?: P } & Omit<Dialog<P>, "id" | "createdAt" | "props">;
 
-export type PromptDialog = {
-  type: "prompt";
-  title?: string;
-  message: string;
-  placeholder?: string;
-  onInput?: (input: string) => any;
-  onCancel?: Function;
+export type DialogProps<P = any> = Dialog<P> & {
+  close: () => any;
+  handleClose: (callback?: () => any) => () => any;
 };
-
-export type CustomDialog = {
-  type: "custom";
-  render: (props: Dialog & { close: () => any }) => React.ReactNode;
-};
-
-export type DialogAll = /* AlertDialog | ConfirmDialog | PromptDialog | */ CustomDialog;
-export type DialogTypes = DialogAll["type"];
-export type DialogByType<T extends DialogTypes> = Extract<DialogAll, { type: T }>;
-export type DialogOptions<T extends DialogTypes> = Omit<DialogByType<T>, "type">;
-export type Dialog = DialogAll & { id: string; createdAt: number };
