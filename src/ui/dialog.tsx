@@ -1,4 +1,7 @@
-import React from "react";
+import React, { createContext, useContext, useId } from "react";
+
+export const DialogIdContext = createContext<string>("");
+export const useDialogId = () => useContext(DialogIdContext);
 
 export const Backdrop = React.forwardRef<React.ComponentRef<"div">, React.ComponentProps<"div">>(
   ({ children, ...props }, ref) => {
@@ -30,20 +33,25 @@ export const Backdrop = React.forwardRef<React.ComponentRef<"div">, React.Compon
 
 const BackdropComp = Backdrop;
 
-type DialogProps = {
-  open: boolean;
-  onClose?: () => any;
-  Backdrop?: (props: React.ComponentProps<"div">) => JSX.Element;
-};
+export const Dialog = React.forwardRef<
+  React.ComponentRef<"div">,
+  React.ComponentProps<"div"> & {
+    open: boolean;
+    onClose?: () => any;
+    Backdrop?: (props: React.ComponentProps<"div">) => JSX.Element;
+  }
+>(({ open, onClose, Backdrop = BackdropComp, ...props }, ref) => {
+  const id = useId();
+  if (!open) return null;
 
-export const Dialog = React.forwardRef<React.ComponentRef<"div">, React.ComponentProps<"div"> & DialogProps>(
-  ({ open, onClose, Backdrop = BackdropComp, ...props }, ref) => {
-    if (!open) return null;
-
-    return (
+  return (
+    <DialogIdContext.Provider value={id}>
       <Backdrop onClick={onClose}>
         <div
           ref={ref}
+          aria-labelledby={`dialog_${id}_title`}
+          aria-describedby={`dialog_${id}_desc`}
+          role="dialog"
           {...props}
           style={{
             zIndex: 9999,
@@ -58,10 +66,11 @@ export const Dialog = React.forwardRef<React.ComponentRef<"div">, React.Componen
             borderRadius: 12,
             width: "fit-content",
             maxWidth: "90vw",
+            boxShadow: "0 20px 40px -10px rgb(0 0 0 / 0.15)",
+            ...props.style,
           }}
-          role="dialog"
         />
       </Backdrop>
-    );
-  },
-);
+    </DialogIdContext.Provider>
+  );
+});

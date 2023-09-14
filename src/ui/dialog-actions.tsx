@@ -1,6 +1,6 @@
 import React from "react";
 
-export const Actions = React.forwardRef<React.ComponentRef<"div">, React.ComponentProps<"div">>((props, ref) => {
+export const DialogActions = React.forwardRef<React.ComponentRef<"div">, React.ComponentProps<"div">>((props, ref) => {
   return (
     <div
       ref={ref}

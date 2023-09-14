@@ -29,7 +29,7 @@
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "allowJs": true,
-    "incremental": true,
+    "incremental": false,
     "resolveJsonModule": true,
     "isolatedModules": true
   },

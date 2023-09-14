@@ -1,4 +1,5 @@
-export { Actions } from "./actions";
 export { Button, PrimaryButton } from "./button";
-export { Backdrop, Dialog } from "./dialog";
-export { Title } from "./title";
+export { Backdrop, Dialog, useDialogId } from "./dialog";
+export { DialogActions } from "./dialog-actions";
+export { DialogDescription } from "./dialog-description";
+export { DialogTitle } from "./dialog-title";

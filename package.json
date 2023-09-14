@@ -1,14 +1,23 @@
 {
   "name": "react-imp",
-  "version": "0.0.1",
-  "description": "Easy imperative callouts",
+  "version": "0.0.2",
+  "description": "Easy to use imperative callouts",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "repository": "https://github.com/renatorib/react-imp",
   "author": "<hi@rena.to>",
   "license": "MIT",
   "scripts": {
-    "dev": "next dev"
+    "dev": "next dev",
+    "build": "tsup"
   },
+  "files": [
+    "src",
+    "dist",
+    "package.json",
+    "README.md",
+    "LICENSE"
+  ],
   "peerDependencies": {
     "react": ">=16",
     "react-dom": ">=16"
@@ -21,6 +30,7 @@
     "prettier": "^3.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "tsup": "^7.2.0",
     "typescript": "^5.2.2"
   },
   "dependencies": {

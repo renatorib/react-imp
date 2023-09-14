@@ -1,6 +1,6 @@
 import React from "react";
 import { dialog } from "../store";
-import { Actions, Button, PrimaryButton, Title, Dialog } from "../ui";
+import { DialogActions, Button, PrimaryButton, Dialog, DialogTitle, DialogDescription } from "../ui";
 import { DangerButton } from "../ui/button";
 
 export const confirm = (props: {
@@ -15,16 +15,16 @@ export const confirm = (props: {
     Component: function ConfirmDialog(dialog) {
       return (
         <Dialog open={true}>
-          {dialog.props.title && <Title>{dialog.props.title}</Title>}
-          <p>{dialog.props.message}</p>
-          <Actions>
+          {dialog.props.title && <DialogTitle>{dialog.props.title}</DialogTitle>}
+          <DialogDescription>{dialog.props.message}</DialogDescription>
+          <DialogActions>
             <Button onClick={dialog.handleClose(dialog.props.onCancel)}>Cancel</Button>
             {dialog.props.danger ? (
               <DangerButton onClick={dialog.handleClose(dialog.props.onConfirm)}>Confirm</DangerButton>
             ) : (
               <PrimaryButton onClick={dialog.handleClose(dialog.props.onConfirm)}>Confirm</PrimaryButton>
             )}
-          </Actions>
+          </DialogActions>
         </Dialog>
       );
     },

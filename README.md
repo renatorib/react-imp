@@ -7,17 +7,21 @@ Pluggable easy to use imperative dialogs.
 - Lightweight.
 - Easy to use.
 
-## Example
+## Getting Started
 
-1. First you need to place `<Imper />` in root of your application. If you use Next.js, it should placed in `pages/_app` (pages router) or `app/layout` (app router)
+1. First you need to place `<ImpRenderer />` in root of your application.
+
+_If you use Next.js, it should placed in `pages/_app` (pages router) or `app/layout` (app router)_
 
 ```tsx
+import { ImpRenderer } from "react-imp";
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body>
         {children}
-        <Imper />
+        <ImpRenderer />
       </body>
     </html>
   );
@@ -26,7 +30,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 
 2. Just call the type function from anywhere!
 
-**Confirm**
+**confirm**
 
 ```tsx
 import { confirm } from "react-imp";
@@ -40,7 +44,7 @@ export default function Page() {
 }
 ```
 
-**Alert**
+**alert**
 
 ```tsx
 import { alert } from "react-imp";
@@ -59,10 +63,10 @@ export default function Page() {
 }
 ```
 
-**Custom**
+**custom**
 
 ```tsx
-import { Imper, alert } from "react-imp";
+import { custom } from "react-imp";
 
 export default function Page() {
   return (
@@ -82,11 +86,12 @@ export default function Page() {
 }
 ```
 
-## Customizable
+## Customization
 
-Create your own callable functions
+You can create your fully customizable imperative dialog with your own props, rules and UI. You can even use the Dialog component of your favorite lib.
+See below an example using MUI dialog:
 
-1. Create your type function
+First, create your type function with `dialog({ props, Component })`
 
 ```tsx
 import { dialog } from "react-imp";
@@ -100,7 +105,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 export const agreement = (props: { title: string; message: string; onAgree: () => any; onDisagree?: () => any }) =>
   dialog({
     props,
-    Component: function MyCustomDialog(dialog) {
+    Component: function AgreementDialog(dialog) {
       return (
         <Dialog open={true} onClose={dialog.close}>
           <DialogTitle>{dialog.props.title}</DialogTitle>
@@ -119,10 +124,29 @@ export const agreement = (props: { title: string; message: string; onAgree: () =
   });
 ```
 
-2. Use it anywhere!
+You can also separate the Component if you intent to build something reusable:
 
 ```tsx
-import { agreement } from "./custom-imp";
+// imports
+
+type AgreementProps = {
+  title: string;
+  message: string;
+  onAgree: () => any;
+  onDisagree?: () => any;
+};
+
+function AgreementDialog(dialog: DialogProps<AgreementProps>) {
+  return /* Dialog UI */;
+}
+
+export const agreement = (props: AgreementProps) => dialog({ props, Component: AgreementDialog });
+```
+
+Then, use it anywhere!
+
+```tsx
+import { agreement } from "../anywhere/in/my/app";
 
 export default function Page() {
   function request() {
@@ -138,7 +162,15 @@ export default function Page() {
 }
 ```
 
-## Credits
+# Acknowledgement
 
-- ariakit: Dialog component inspirations
-- react-hot-toast: api and store inspirations
+Some inspirations for the project were:
+
+- [react-hot-toast](https://react-hot-toast.com/) - api simplicity and store inspirations.
+- [Ariakit](https://ariakit.org/): Dialog component and dialog a11y inspirations.
+
+# Author
+
+© renatorib, Released under the MIT License.
+
+> [Website](https://rena.to) · [GitHub @reantorib](https://github.com/renatorib) · [Twitter @renatoribz](https://twitter.com/renatoribz)
