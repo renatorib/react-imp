@@ -88,7 +88,7 @@ export default function Page() {
 
 ## Customization
 
-You can create your fully customizable imperative dialog with your own props, rules and UI. You can even use the Dialog component of your favorite lib.
+You can create your fully customizable imperative dialog with your own props, rules and UI. You can even use the Dialog component from your favorite lib.
 See below an example using MUI dialog:
 
 First, create your type function with `dialog({ props, Component })`
@@ -124,7 +124,7 @@ export const agreement = (props: { title: string; message: string; onAgree: () =
   });
 ```
 
-You can also separate the Component if you intent to build something reusable:
+You can also separate the Component if you intend to build something reusable:
 
 ```tsx
 // imports

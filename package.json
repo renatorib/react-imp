@@ -9,7 +9,8 @@
   "license": "MIT",
   "scripts": {
     "dev": "next dev",
-    "build": "tsup"
+    "build": "tsup",
+    "prepublishOnly": "yarn build"
   },
   "files": [
     "src",
