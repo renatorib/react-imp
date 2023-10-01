@@ -1,7 +1,7 @@
-export { dialog } from "./store";
-export { alert } from "./types/alert";
-export { confirm } from "./types/confirm";
-export { custom } from "./types/custom";
-export { ImpRenderer } from "./store/ImpRenderer";
+export { Imp } from "./core/Imp";
+export { call, createCaller } from "./core/store";
+export type { DialogItem, DialogOptions, DialogProps } from "./core/types";
 
-export type { Dialog, DialogOptions, DialogProps } from "./store/types";
+export { alert } from "./callers/alert";
+export { confirm } from "./callers/confirm";
+export { custom } from "./callers/custom";

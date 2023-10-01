@@ -1,7 +1,7 @@
 {
   "name": "react-imp",
-  "version": "0.0.2",
-  "description": "Easy to use imperative callouts",
+  "version": "0.1.0",
+  "description": "Easy to use imperative dialog callouts",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "repository": "https://github.com/renatorib/react-imp",
@@ -10,6 +10,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "tsup",
+    "test-build": "tsup --config tsup.test.config.ts && gzip dist-test/test.js && ls -lrth dist-test/test.js.gz | nawk '{print $5}'",
     "prepublishOnly": "yarn build"
   },
   "files": [
@@ -27,6 +28,7 @@
     "@types/node": "20.5.9",
     "@types/react": "^18.2.21",
     "@types/react-dom": "^18.2.7",
+    "gzip-cli": "^1.2.0",
     "next": "^13.4.19",
     "prettier": "^3.0.3",
     "react": "^18.2.0",
@@ -34,7 +36,5 @@
     "tsup": "^7.2.0",
     "typescript": "^5.2.2"
   },
-  "dependencies": {
-    "mitt": "^3.0.1"
-  }
+  "dependencies": {}
 }
