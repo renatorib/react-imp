@@ -9,7 +9,7 @@ export default defineConfig([
     esbuildOptions: (options) => {
       options.banner = { js: '"use client";' };
     },
-    entry: ["src"],
+    entry: ["src/index.ts", "src/headless.ts"],
     outDir: "dist",
   },
 ]);

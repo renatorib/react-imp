@@ -1,5 +1,5 @@
 import React from "react";
-import { DialogProps, createCaller } from "../core/store";
+import { DialogProps, createCaller } from "../store/store";
 import { DialogActions, Button, DangerButton, PrimaryButton, Dialog, DialogTitle, DialogBody } from "../dialog";
 
 function ConfirmDialog(

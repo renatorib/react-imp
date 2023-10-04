@@ -1,6 +1,6 @@
 import React from "react";
 
-import { DialogProps, createCaller } from "../core/store";
+import { DialogProps, createCaller } from "../store/store";
 import { DialogActions, PrimaryButton, Dialog, DialogTitle, DialogBody } from "../dialog";
 
 function AlertDialog(dialog: DialogProps<{ title?: string; message: string; onClose?: () => any }>) {

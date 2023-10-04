@@ -1,5 +1,5 @@
 import React from "react";
-import { DialogProps, createCaller } from "../core/store";
+import { DialogProps, createCaller } from "../store/store";
 import { Dialog } from "../dialog";
 
 function CustomDialog(dialog: DialogProps<(dialog: Omit<DialogProps, "props">) => React.ReactNode>) {

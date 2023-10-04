@@ -35,9 +35,11 @@ export class ArrayStore<T = any> extends Store<T[]> {
   push(item: T) {
     return this.setState((state) => [...state, item]);
   }
+
   remove(predicate: (item: T) => boolean) {
     return this.setState((state) => state.filter((item) => !predicate(item)));
   }
+
   update(predicate: (item: T) => boolean, updater: (item: T) => T) {
     return this.setState((state) =>
       state.map((item) => {
