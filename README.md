@@ -1,6 +1,6 @@
 # React Imp
 
-Pluggable easy to use imperative dialogs.
+Pluggable easy to use imperative dialogs/callouts.
 
 - Accessible.
 - Customizable.
@@ -9,26 +9,26 @@ Pluggable easy to use imperative dialogs.
 
 ## Getting Started
 
-1. First you need to place `<ImpRenderer />` in root of your application.
+1. First you need to place `<Imp />` in root of your application.
 
 _If you use Next.js, it should placed in `pages/_app` (pages router) or `app/layout` (app router)_
 
 ```tsx
-import { ImpRenderer } from "react-imp";
+import { Imp } from "react-imp";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body>
         {children}
-        <ImpRenderer />
+        <Imp />
       </body>
     </html>
   );
 }
 ```
 
-2. Just call the type function from anywhere!
+2. Just call the caller function from anywhere!
 
 **confirm**
 
@@ -72,10 +72,10 @@ export default function Page() {
   return (
     <button
       onClick={() =>
-        custom((dialog) => (
+        custom((item) => (
           <span>
             Custom and <b>bold</b>
-            <button onClick={dialog.close}>Close</button>
+            <button onClick={() item.close()}>Close</button>
           </span>
         ))
       }
@@ -91,10 +91,10 @@ export default function Page() {
 You can create your fully customizable imperative dialog with your own props, rules and UI. You can even use the Dialog component from your favorite lib.
 See below an example using MUI dialog:
 
-First, create your type function with `dialog({ props, Component })`
+First, create your caller function with `createCaller(Component)`
 
 ```tsx
-import { dialog } from "react-imp";
+import { createCaller, CallerComponentProps } from "react-imp";
 
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -102,48 +102,66 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 
-export const agreement = (props: { title: string; message: string; onAgree: () => any; onDisagree?: () => any }) =>
-  dialog({
-    props,
-    Component: function AgreementDialog(dialog) {
-      return (
-        <Dialog open={true} onClose={dialog.close}>
-          <DialogTitle>{dialog.props.title}</DialogTitle>
-          <DialogContent>
-            <DialogContentText>{dialog.props.message}</DialogContentText>
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={dialog.handleClose(dialog.props.onDisagree)}>Disagree</Button>
-            <Button onClick={dialog.handleClose(dialog.props.onAgree)} autoFocus>
-              Agree
-            </Button>
-          </DialogActions>
-        </Dialog>
-      );
-    },
-  });
+export const agreement = createCaller<{
+  title: string;
+  message: string;
+  onAgree: () => any;
+  onDisagree?: () => any;
+}>((item) => (
+  <Dialog open={item.isOpen} onClose={() => item.close()}>
+    <DialogTitle>{item.props.title}</DialogTitle>
+    <DialogContent>
+      <DialogContentText>{item.props.message}</DialogContentText>
+    </DialogContent>
+    <DialogActions>
+      <Button onClick={item.handleClose(item.props.onDisagree)}>Disagree</Button>
+      <Button onClick={item.handleClose(item.props.onAgree)} autoFocus>
+        Agree
+      </Button>
+    </DialogActions>
+  </Dialog>
+));
 ```
 
 You can also separate the Component if you intend to build something reusable:
 
 ```tsx
-// imports
+import { createCaller, CallerComponentProps } from "react-imp";
 
-type AgreementProps = {
-  title: string;
-  message: string;
-  onAgree: () => any;
-  onDisagree?: () => any;
-};
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 
-function AgreementDialog(dialog: DialogProps<AgreementProps>) {
-  return /* Dialog UI */;
+function AgreementDialog(
+  item: CallerComponentProps<{
+    title: string;
+    message: string;
+    onAgree: () => any;
+    onDisagree?: () => any;
+  }>,
+) {
+  return (
+    <Dialog open={item.isOpen} onClose={() => item.close()}>
+      <DialogTitle>{item.props.title}</DialogTitle>
+      <DialogContent>
+        <DialogContentText>{item.props.message}</DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={item.handleClose(item.props.onDisagree)}>Disagree</Button>
+        <Button onClick={item.handleClose(item.props.onAgree)} autoFocus>
+          Agree
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
 }
 
-export const agreement = (props: AgreementProps) => dialog({ props, Component: AgreementDialog });
+export const agreement = createCaller(AgreementDialog);
 ```
 
-Then, use it anywhere!
+Then use it anywhere!
 
 ```tsx
 import { agreement } from "../anywhere/in/my/app";

@@ -1,0 +1,6 @@
+{
+  "private": true,
+  "main": "../dist/headless.js",
+  "module": "../dist/headless.mjs",
+  "types": "../dist/headless.d.ts"
+}

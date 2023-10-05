@@ -6,10 +6,12 @@ export default defineConfig([
     format: ["esm", "cjs"],
     sourcemap: true,
     clean: true,
+    entry: ["src"],
+    outDir: "dist",
+    splitting: true,
     esbuildOptions: (options) => {
       options.banner = { js: '"use client";' };
+      options.chunkNames = "__chunks/[hash]";
     },
-    entry: ["src/index.ts", "src/headless.ts"],
-    outDir: "dist",
   },
 ]);

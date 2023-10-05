@@ -1,0 +1,6 @@
+{
+  "private": true,
+  "main": "../dist/dialog.js",
+  "module": "../dist/dialog.mjs",
+  "types": "../dist/dialog.d.ts"
+}

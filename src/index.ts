@@ -1,6 +1,6 @@
-export { Imp } from "./store/Imp";
-export { store, call, createCaller } from "./store/store";
-export type { DialogItem, DialogOptions, DialogProps } from "./store/types";
+export { Imp } from "./imp-store/Imp";
+export { impStore, call, createCaller } from "./imp-store/imp-store";
+export type { Item, CallOptions, CallerComponent, CallerComponentProps } from "./imp-store/imp-store";
 
 export { alert } from "./callers/alert";
 export { confirm } from "./callers/confirm";

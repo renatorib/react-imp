@@ -1,9 +1,9 @@
 import React from "react";
-import { DialogProps, createCaller } from "../store/store";
+import { CallerComponentProps, createCaller } from "../imp-store/imp-store";
 import { DialogActions, Button, DangerButton, PrimaryButton, Dialog, DialogTitle, DialogBody } from "../dialog";
 
 function ConfirmDialog(
-  dialog: DialogProps<{
+  item: CallerComponentProps<{
     title?: string;
     danger?: boolean;
     message: string;
@@ -13,15 +13,15 @@ function ConfirmDialog(
   }>,
 ) {
   return (
-    <Dialog open={dialog.open} onClose={dialog.handleClose(dialog.props.onClose)}>
-      {dialog.props.title && <DialogTitle>{dialog.props.title}</DialogTitle>}
-      <DialogBody>{dialog.props.message}</DialogBody>
+    <Dialog open={item.isOpen} onClose={item.handleClose(item.props.onClose)}>
+      {item.props.title && <DialogTitle>{item.props.title}</DialogTitle>}
+      <DialogBody>{item.props.message}</DialogBody>
       <DialogActions>
-        <Button onClick={dialog.handleClose(dialog.props.onCancel)}>Cancel</Button>
-        {dialog.props.danger ? (
-          <DangerButton onClick={dialog.handleClose(dialog.props.onConfirm)}>Confirm</DangerButton>
+        <Button onClick={item.handleClose(item.props.onCancel)}>Cancel</Button>
+        {item.props.danger ? (
+          <DangerButton onClick={item.handleClose(item.props.onConfirm)}>Confirm</DangerButton>
         ) : (
-          <PrimaryButton onClick={dialog.handleClose(dialog.props.onConfirm)}>Confirm</PrimaryButton>
+          <PrimaryButton onClick={item.handleClose(item.props.onConfirm)}>Confirm</PrimaryButton>
         )}
       </DialogActions>
     </Dialog>

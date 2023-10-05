@@ -1,8 +1,9 @@
 {
   "name": "react-imp",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "Easy to use imperative dialog callouts",
   "main": "dist/index.js",
+  "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "repository": "https://github.com/renatorib/react-imp",
   "author": "<hi@rena.to>",
@@ -15,12 +16,9 @@
     "test-build": "tsup --config tsup.test.config.ts && yarn test-calc-index && yarn test-calc-dialog",
     "prepublishOnly": "yarn build"
   },
-  "exports": {
-    ".": "./dist/index.js",
-    "./headless": "./dist/headless.js"
-  },
   "files": [
-    "src",
+    "dialog",
+    "headless",
     "dist",
     "package.json",
     "README.md",

@@ -84,12 +84,12 @@ export default function App() {
                   <div style={{ paddingBottom: 100 }}>
                     Custom and <b>bold</b>
                   </div>
-                  <button onClick={dialog.close}>Close</button>
+                  <button onClick={() => dialog.close()}>Close</button>
                   <button
                     onClick={() =>
                       custom((dialog) => (
                         <span>
-                          Nested! <button onClick={dialog.close}>Close</button>
+                          Nested! <button onClick={() => dialog.close()}>Close</button>
                         </span>
                       ))
                     }

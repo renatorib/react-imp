@@ -1,17 +1,17 @@
 import React from "react";
 
-import { DialogProps, createCaller } from "../store/store";
+import { CallerComponentProps, createCaller } from "../imp-store/imp-store";
 import { DialogActions, PrimaryButton, Dialog, DialogTitle, DialogBody } from "../dialog";
 
-function AlertDialog(dialog: DialogProps<{ title?: string; message: string; onClose?: () => any }>) {
-  const { title, message, onClose } = dialog.props;
+function AlertDialog(item: CallerComponentProps<{ title?: string; message: string; onClose?: () => any }>) {
+  const { title, message, onClose } = item.props;
 
   return (
-    <Dialog open={dialog.open} onClose={dialog.handleClose(onClose)}>
+    <Dialog open={item.isOpen} onClose={item.handleClose(onClose)}>
       {title && <DialogTitle>{title}</DialogTitle>}
       <DialogBody>{message}</DialogBody>
       <DialogActions>
-        <PrimaryButton onClick={dialog.handleClose(onClose)}>Ok</PrimaryButton>
+        <PrimaryButton onClick={item.handleClose(onClose)}>Ok</PrimaryButton>
       </DialogActions>
     </Dialog>
   );
