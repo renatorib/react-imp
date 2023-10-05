@@ -9,28 +9,34 @@ Pluggable easy to use imperative dialogs/callouts.
 
 ## Getting Started
 
-1. First you need to place `<Imp />` in root of your application.
+Install
 
-_If you use Next.js, it should placed in `pages/_app` (pages router) or `app/layout` (app router)_
+```
+yarn add react-imp
+```
+
+Basic usage
 
 ```tsx
-import { Imp } from "react-imp";
+import { Imp, confirm } from "react-imp";
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function App() {
+  const handleDeleteItem = () => {
+    /* ... */
+  };
+
   return (
-    <html lang="en">
-      <body>
-        {children}
-        <Imp />
-      </body>
-    </html>
+    <div>
+      <Item onDelete={() => confirm({ title: "Are you sure?", danger: true, onConfirm: handleDeleteItem })} />
+      <Imp />
+    </div>
   );
 }
 ```
 
-2. Just call the caller function from anywhere!
+## Callers
 
-**confirm**
+**confirm()**
 
 ```tsx
 import { confirm } from "react-imp";
@@ -44,7 +50,7 @@ export default function Page() {
 }
 ```
 
-**alert**
+**alert()**
 
 ```tsx
 import { alert } from "react-imp";
@@ -63,7 +69,11 @@ export default function Page() {
 }
 ```
 
-**custom**
+**prompt()**
+
+[In progress]
+
+**custom()**
 
 ```tsx
 import { custom } from "react-imp";
