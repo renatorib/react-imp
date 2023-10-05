@@ -183,7 +183,8 @@ export default function Page() {
 
 ## Custom Render
 
-TODO DESCRIPTION
+You can customize the caller render if you want to.  
+The default render is `(Component, props) => <Component {...props} />`
 
 ```tsx
 import { Imp } from "react-imp";
@@ -191,7 +192,13 @@ import { Imp } from "react-imp";
 export function App() {
   return (
     <>
-      <Imp render={(Component, props) => <Component {...props} />} />
+      <Imp
+        render={(Component, props) => (
+          <CustomWrapper>
+            <Component {...props} />
+          </CustomWrapper>
+        )}
+      />
     </>
   );
 }
@@ -199,7 +206,7 @@ export function App() {
 
 ## Channels
 
-TODO DESCRIPTION
+You can create different channels with different renderers to your callers.
 
 ```tsx
 import { Imp, createCaller } from "react-imp";
@@ -224,7 +231,7 @@ export function App() {
 
 Some inspirations for the project were:
 
-- [react-hot-toast](https://react-hot-toast.com/) - Inspired me by their API simplicity.
+- [react-hot-toast](https://react-hot-toast.com/): Inspired me by their API simplicity.
 - [Ariakit](https://ariakit.org/): Learned a lot from Ariakit to build the Dialog component and all its a11y concerns.
 
 # Author
@@ -232,7 +239,3 @@ Some inspirations for the project were:
 © renatorib, Released under the MIT License.
 
 > [Website](https://rena.to) · [GitHub @reantorib](https://github.com/renatorib) · [Twitter @renatoribz](https://twitter.com/renatoribz)
-
-```
-
-```
