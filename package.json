@@ -1,6 +1,6 @@
 {
   "name": "react-imp",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "Easy to use imperative dialog callouts",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -11,9 +11,6 @@
   "scripts": {
     "dev": "next dev",
     "build": "tsup",
-    "test-calc-index": "gzip dist-test/index.js && ls -lrth dist-test/index.js.gz | nawk '{print $5}'",
-    "test-calc-dialog": "gzip dist-test/dialog.js && ls -lrth dist-test/dialog.js.gz | nawk '{print $5}'",
-    "test-build": "tsup --config tsup.test.config.ts && yarn test-calc-index && yarn test-calc-dialog",
     "prepublishOnly": "yarn build"
   },
   "files": [
