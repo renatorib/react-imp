@@ -86,7 +86,7 @@ export default function Page() {
 }
 ```
 
-## Customization
+## Headless
 
 You can create your fully customizable imperative dialog with your own props, rules and UI. You can even use the Dialog component from your favorite lib.
 See below an example using MUI dialog:
@@ -94,7 +94,7 @@ See below an example using MUI dialog:
 First, create your caller function with `createCaller(Component)`
 
 ```tsx
-import { createCaller, CallerComponentProps } from "react-imp";
+import { createCaller } from "react-imp/headless";
 
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -158,6 +158,7 @@ function AgreementDialog(
   );
 }
 
+// prop types inferred from AgreementDialog!
 export const agreement = createCaller(AgreementDialog);
 ```
 
@@ -180,15 +181,58 @@ export default function Page() {
 }
 ```
 
+## Custom Render
+
+TODO DESCRIPTION
+
+```tsx
+import { Imp } from "react-imp";
+
+export function App() {
+  return (
+    <>
+      <Imp render={(Component, props) => <Component {...props} />} />
+    </>
+  );
+}
+```
+
+## Channels
+
+TODO DESCRIPTION
+
+```tsx
+import { Imp, createCaller } from "react-imp";
+
+function Toast(props) {}
+function Dialog(props) {}
+
+const toast = createCaller(Toast, { channel: "toasts" });
+const confirm = createCaller(Dialog, { channel: "dialogs" });
+
+export function App() {
+  return (
+    <>
+      <Imp channel="toasts" />
+      <Imp channel="dialogs" />
+    </>
+  );
+}
+```
+
 # Acknowledgement
 
 Some inspirations for the project were:
 
-- [react-hot-toast](https://react-hot-toast.com/) - api simplicity and store inspirations.
-- [Ariakit](https://ariakit.org/): Dialog component and dialog a11y inspirations.
+- [react-hot-toast](https://react-hot-toast.com/) - Inspired me by their API simplicity.
+- [Ariakit](https://ariakit.org/): Learned a lot from Ariakit to build the Dialog component and all its a11y concerns.
 
 # Author
 
 © renatorib, Released under the MIT License.
 
 > [Website](https://rena.to) · [GitHub @reantorib](https://github.com/renatorib) · [Twitter @renatoribz](https://twitter.com/renatoribz)
+
+```
+
+```
