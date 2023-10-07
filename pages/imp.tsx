@@ -3,10 +3,9 @@ import React from "react";
 import { Imp, alert, confirm, custom } from "../src";
 import { dialogStack } from "../src/dialog";
 
-const onConfirm = (foo?: string) => console.log("Confirmed");
+const onConfirm = () => console.log("Confirmed");
 const onCancel = () => console.log("Canceled");
 const onClose = () => console.log("Closed");
-// const onInput = (input: string) => console.log("Input:", input);
 
 const areYouSure = (cb: () => any) => () =>
   confirm({
