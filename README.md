@@ -1,6 +1,6 @@
 <p align="center">
-  <img src="./assets/react-imp-light.gif#gh-light-mode-only" />
-  <img src="./assets/react-imp-dark.gif#gh-dark-mode-only" />
+  <img src="./assets/react-imp-light.png#gh-light-mode-only" />
+  <img src="./assets/react-imp-dark.png#gh-dark-mode-only" />
 </p>
 
 <p align="center">
