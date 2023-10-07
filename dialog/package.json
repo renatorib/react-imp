@@ -1,6 +1,6 @@
 {
   "private": true,
-  "main": "../dist/dialog.js",
-  "module": "../dist/dialog.mjs",
-  "types": "../dist/dialog.d.ts"
+  "main": "../dist/dialog/index.js",
+  "module": "../dist/dialog/index.mjs",
+  "types": "../dist/dialog/index.d.ts"
 }
