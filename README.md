@@ -56,7 +56,7 @@ export const areYouSure = (cb: () => any) => () =>
 ```
 
 ```tsx
-import { Imo } from "react-imp";
+import { Imp } from "react-imp";
 import { areYouSure } from "../imp-guards";
 
 export default function App() {
