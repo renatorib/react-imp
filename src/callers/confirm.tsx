@@ -6,7 +6,7 @@ function ConfirmDialog(
   item: CallerComponentProps<{
     title?: string;
     danger?: boolean;
-    message: string;
+    message?: string;
     onConfirm: () => any;
     onCancel?: () => any;
     onClose?: () => any;
@@ -15,7 +15,7 @@ function ConfirmDialog(
   return (
     <Dialog open={item.isOpen} onClose={item.handleClose(item.props.onClose)}>
       {item.props.title && <DialogTitle>{item.props.title}</DialogTitle>}
-      <DialogBody>{item.props.message}</DialogBody>
+      {item.props.message && <DialogBody>{item.props.message}</DialogBody>}
       <DialogActions>
         <Button onClick={item.handleClose(item.props.onCancel)}>Cancel</Button>
         {item.props.danger ? (

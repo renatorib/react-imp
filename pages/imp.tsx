@@ -1,51 +1,25 @@
 import React from "react";
-import Head from "next/head";
 
 import { Imp, alert, confirm, custom } from "../src";
 import { dialogStack } from "../src/dialog";
 
-const onConfirm = () => console.log("Confirmed");
+const onConfirm = (foo?: string) => console.log("Confirmed");
 const onCancel = () => console.log("Canceled");
 const onClose = () => console.log("Closed");
 // const onInput = (input: string) => console.log("Input:", input);
+
+const areYouSure = (cb: () => any) => () =>
+  confirm({
+    title: "Are you sure?",
+    message: "This action is irreversible. You can't go back!",
+    danger: true,
+    onConfirm: cb,
+  });
 
 export default function App() {
   const [stack] = dialogStack.useStore();
   return (
     <>
-      <Head>
-        <style
-          type="text/css"
-          dangerouslySetInnerHTML={{
-            __html: `
-              body {
-                font-family: Inter, "sans-serif";
-                padding: 0;
-                margin: 0;
-              }
-
-              .imp-backdrop[data-animated] {
-                transition: all var(--duration, 100ms) ease;
-                opacity: 0;
-              }
-              .imp-backdrop[data-enter] {
-                opacity: 100;
-              }
-
-              .imp-dialog[data-animated] {
-                transition: all var(--duration, 100ms) ease;
-                transform: scale(0.8) translateY(-10px);
-              }
-              .imp-dialog[data-enter] {
-                transform: scale(1) translateY(0);
-              }
-              .imp-dialog[data-leave] {
-                transform: scale(0.8) translateY(-10px);
-              }
-            `,
-          }}
-        />
-      </Head>
       <div>
         <pre>{JSON.stringify(stack)}</pre>
       </div>
@@ -76,6 +50,8 @@ export default function App() {
           >
             confirm
           </button>
+
+          <button onClick={areYouSure(onConfirm)}>confirm guard</button>
 
           <button
             onClick={() =>

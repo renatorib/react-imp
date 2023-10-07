@@ -21,113 +21,189 @@ Basic usage
 import { Imp, confirm } from "react-imp";
 
 export default function App() {
-  const handleDeleteItem = () => {
-    /* ... */
-  };
+  const handleDeleteItem = () => api.deleteItem();
 
   return (
     <div>
-      <Item onDelete={() => confirm({ title: "Are you sure?", danger: true, onConfirm: handleDeleteItem })} />
+      <Item
+        onDelete={() =>
+          confirm({
+            title: "Are you sure?",
+            message: "This action is irreversible. You can't go back!",
+            danger: true,
+            onConfirm: handleDeleteItem,
+          })
+        }
+      />
       <Imp />
     </div>
   );
 }
 ```
 
-## Callers
-
-**confirm()**
+Creating reusable guards
 
 ```tsx
 import { confirm } from "react-imp";
 
-export default function Page() {
-  const handleDeleteItem = () => {
-    /* ... */
-  };
+export const areYouSure = (cb: () => any) => () =>
+  confirm({
+    title: "Are you sure?",
+    message: "This action is irreversible. You can't go back!",
+    danger: true,
+    onConfirm: cb,
+  });
+```
 
-  return <Item onDelete={() => confirm({ title: "Are you sure?", danger: true, onConfirm: handleDeleteItem })} />;
+```tsx
+import { Imo } from "react-imp";
+import { areYouSure } from "../imp-guards";
+
+export default function App() {
+  const handleDeleteItem = () => api.deleteItem();
+
+  return (
+    <div>
+      <Item onDelete={areYouSure(handleDeleteItem)} />
+      <Imp />
+    </div>
+  );
 }
 ```
 
-**alert()**
+## Built-in callers
+
+```tsx
+import { confirm, alert, custom } from "react-imp";
+```
+
+### confirm
+
+**Types**
+
+```tsx
+const confirm: (props: {
+  title?: string | undefined;
+  danger?: boolean | undefined;
+  message?: string | undefined;
+  onConfirm: () => any;
+  onCancel?: (() => any) | undefined;
+  onClose?: (() => any) | undefined;
+}) => void;
+```
+
+**Example**
+
+```tsx
+confirm({
+  title: "Are you sure?",
+  message: "This action is irreversible. You can't go back!",
+  danger: true,
+  onConfirm: () => console.log("Confirmed"),
+  onCancel: () => console.log("Canceled"),
+  onClose: () => console.log("Closed"),
+});
+```
+
+### alert
 
 ```tsx
 import { alert } from "react-imp";
-
-export default function Page() {
-  return (
-    <Payment
-      onSuccess={() =>
-        alert({
-          title: "Success!",
-          message: "Your payment has been successfully processed. We have emailed your receipt.",
-        })
-      }
-    />
-  );
-}
 ```
 
-**prompt()**
-
-[In progress]
-
-**custom()**
+**Types**
 
 ```tsx
-import { custom } from "react-imp";
-
-export default function Page() {
-  return (
-    <button
-      onClick={() =>
-        custom((item) => (
-          <span>
-            Custom and <b>bold</b>
-            <button onClick={() item.close()}>Close</button>
-          </span>
-        ))
-      }
-    >
-      custom
-    </button>
-  );
-}
+const alert: (props: {
+  title?: string | undefined;
+  message?: string | undefined;
+  onClose?: (() => any) | undefined;
+}) => void;
 ```
 
-## Headless
-
-You can create your fully customizable imperative dialog with your own props, rules and UI. You can even use the Dialog component from your favorite lib.
-See below an example using MUI dialog:
-
-First, create your caller function with `createCaller(Component)`
+**Example**
 
 ```tsx
-import { createCaller } from "react-imp/headless";
+alert({
+  title: "Success!",
+  message: "Your payment has been successfully processed. We have emailed your receipt.",
+  onClose: () => console.log("Closed"),
+});
+```
 
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
+### custom
 
-export const agreement = createCaller<{
-  title: string;
-  message: string;
-  onAgree: () => any;
-  onDisagree?: () => any;
+**Types**
+
+```tsx
+const custom: (props: (item: Omit<CallerComponentProps, "props">) => React.ReactNode) => void;
+```
+
+**Example**
+
+```tsx
+custom((item) => (
+  <span>
+    <div>
+      Custom and <b>bold</b>
+    </div>
+    <button onClick={() => item.close()}>Close</button>
+  </span>
+));
+```
+
+## Create your callers
+
+You can implement your own callers, with your own props and UI.  
+Below is an example of how you can implement your version of the alert and confirm.
+
+```tsx
+import { createCaller } from "react-imp";
+import {
+  Dialog,
+  DialogDismiss,
+  DialogTitle,
+  DialogActions,
+  DialogBody,
+  Button,
+  PrimaryButton,
+  DangerButton,
+} from "react-imp/dialog";
+
+export const alert = createCaller<{
+  title?: string;
+  message?: string;
+  onClose?: () => any;
 }>((item) => (
-  <Dialog open={item.isOpen} onClose={() => item.close()}>
-    <DialogTitle>{item.props.title}</DialogTitle>
-    <DialogContent>
-      <DialogContentText>{item.props.message}</DialogContentText>
-    </DialogContent>
+  <Dialog open={item.isOpen} onClose={item.handleClose(onClose)}>
+    <DialogDismiss />
+    {item.props.title && <DialogTitle>{item.props.title}</DialogTitle>}
+    {item.props.message && <DialogBody>{item.props.message}</DialogBody>}
     <DialogActions>
-      <Button onClick={item.handleClose(item.props.onDisagree)}>Disagree</Button>
-      <Button onClick={item.handleClose(item.props.onAgree)} autoFocus>
-        Agree
-      </Button>
+      <PrimaryButton onClick={item.handleClose(onClose)}>Ok</PrimaryButton>
+    </DialogActions>
+  </Dialog>
+));
+
+export const confirm = createCaller<{
+  title?: string;
+  message?: string;
+  danger?: boolean;
+  onConfirm?: () => any;
+  onCancel?: () => any;
+  onClose?: () => any;
+}>((item) => (
+  <Dialog open={item.isOpen} onClose={item.handleClose(item.props.onClose)}>
+    <DialogDismiss />
+    {item.props.title && <DialogTitle>{item.props.title}</DialogTitle>}
+    {item.props.message && <DialogBody>{item.props.message}</DialogBody>}
+    <DialogActions>
+      <Button onClick={item.handleClose(item.props.onCancel)}>Cancel</Button>
+      {item.props.danger ? (
+        <DangerButton onClick={item.handleClose(item.props.onConfirm)}>Confirm</DangerButton>
+      ) : (
+        <PrimaryButton onClick={item.handleClose(item.props.onConfirm)}>Confirm</PrimaryButton>
+      )}
     </DialogActions>
   </Dialog>
 ));
@@ -137,19 +213,13 @@ You can also separate the Component if you intend to build something reusable:
 
 ```tsx
 import { createCaller, CallerComponentProps } from "react-imp";
+import { Dialog /*, ... */ } from "react-imp/dialog";
 
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-
-function AgreementDialog(
+function AlertDialog(
   item: CallerComponentProps<{
-    title: string;
-    message: string;
-    onAgree: () => any;
-    onDisagree?: () => any;
+    title?: string;
+    message?: string;
+    onClose?: () => any;
   }>,
 ) {
   return (
@@ -168,30 +238,52 @@ function AgreementDialog(
   );
 }
 
-// prop types inferred from AgreementDialog!
-export const agreement = createCaller(AgreementDialog);
+// prop types inferred from AlertDialog!
+export const alert = createCaller(AlertDialog);
+//           ^? const alert: (props: {
+//                title?: string | undefined;
+//                message?: string | undefined;
+//                onClose?: (() => any) | undefined;
+//              }) => void
 ```
 
-Then use it anywhere!
+## Headless
+
+If you are already using a UI library with a Dialog component, you can create your own callers using it instead of using ours.  
+By importing from `react-imp/headless` you also reduce the bundle size by avoiding react-imp UI dependencies.
+
+See below an example creating a caller with MUI.
 
 ```tsx
-import { agreement } from "../anywhere/in/my/app";
+import { createCaller } from "react-imp/headless";
 
-export default function Page() {
-  function request() {
-    agreement({
-      title: "Use Google's location service?",
-      message:
-        "Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.",
-      onAgree: () => console.log("Request approved"),
-    });
-  }
+import Button from "@mui/material/Button";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 
-  return <button onClick={request}>Request location</button>;
-}
+export const alert = createCaller<{
+  title: string;
+  message: string;
+  onClose?: () => any;
+}>((item) => (
+  <Dialog open={item.isOpen} onClose={() => item.close()}>
+    {item.props.title && <DialogTitle>{item.props.title}</DialogTitle>}
+    {item.props.message && (
+      <DialogContent>
+        <DialogContentText>{item.props.message}</DialogContentText>
+      </DialogContent>
+    )}
+    <DialogActions>
+      <Button onClick={item.handleClose(item.props.onClose)}>Ok</Button>
+    </DialogActions>
+  </Dialog>
+));
 ```
 
-## Custom Render
+## Custom render
 
 You can customize the caller render if you want to.  
 The default render is `(Component, props) => <Component {...props} />`

@@ -17,7 +17,16 @@ export function Dialog(props: {
   animation?: false | "custom" | "scale" | "fade" | "slide";
   duration?: number;
 }) {
-  const { children, open, onClose, scrollOn = "backdrop", duration: _duration, animation = "scale" } = props;
+  const {
+    children,
+    open,
+    onClose,
+    scrollOn = "backdrop",
+    duration: _duration,
+    animation = "scale",
+    ...dialogProps
+  } = props;
+
   const duration = animation !== false ? _duration ?? 100 : 0;
   const animated = duration > 0;
 
@@ -224,6 +233,7 @@ export function Dialog(props: {
                 },
               )}
               {...transitionProps}
+              {...dialogProps}
               style={{
                 position: "relative",
                 background: "white",
