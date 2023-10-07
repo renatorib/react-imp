@@ -1,6 +1,5 @@
 <p align="center">
-  <img src="./assets/react-imp-light.png#gh-light-mode-only" />
-  <img src="./assets/react-imp-dark.png#gh-dark-mode-only" />
+  <img src="./assets/logo-light.png" />
 </p>
 
 <p align="center">
@@ -8,7 +7,8 @@
 </p>
 
 <p align="center">
-  <img src="./assets/react-imp-example.gif" />
+  <img src="./assets/react-imp-example-light.gif#gh-light-mode-only" />
+  <img src="./assets/react-imp-example-dark.gif#gh-dark-mode-only" />
 </p>
 
 Also
