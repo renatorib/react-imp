@@ -1,5 +1,4 @@
 import React from "react";
-import Head from "next/head";
 
 import {
   Dialog,
@@ -10,6 +9,7 @@ import {
   DialogDismiss,
   DialogTitle,
   dialogStack,
+  DangerButton,
 } from "../src/dialog";
 
 export default function App() {
@@ -22,39 +22,6 @@ export default function App() {
 
   return (
     <>
-      <Head>
-        <style
-          type="text/css"
-          dangerouslySetInnerHTML={{
-            __html: `
-              body {
-                font-family: Inter, "sans-serif";
-                padding: 0;
-                margin: 0;
-              }
-
-              .imp-backdrop[data-animated] {
-                transition: all var(--duration, 100ms) ease;
-                opacity: 0;
-              }
-              .imp-backdrop[data-enter] {
-                opacity: 100;
-              }
-
-              .imp-dialog[data-animated] {
-                transition: all var(--duration, 100ms) ease;
-                transform: scale(0.8) translateY(-10px);
-              }
-              .imp-dialog[data-enter] {
-                transform: scale(1) translateY(0);
-              }
-              .imp-dialog[data-leave] {
-                transform: scale(0.8) translateY(-10px);
-              }
-            `,
-          }}
-        />
-      </Head>
       <div style={{ height: 50 }}>
         <header
           style={{ position: "sticky", inset: 0, height: 50, width: "100%", background: "black", color: "white" }}
@@ -85,7 +52,55 @@ export default function App() {
           </button>
           <button onClick={() => setOpen3(true)}>3: scroll on backdrop</button>
           <button onClick={() => setOpen4(true)}>4: scroll on dialog</button>
-          <button onClick={() => setOpen5(true)}>5: no transition</button>
+
+          {state(false, ([open, setOpen]) => (
+            <>
+              <button onClick={() => setOpen(true)}>buttons</button>
+              <Dialog open={open} onClose={() => setOpen(false)} animation={false}>
+                <DialogDismiss />
+                <DialogTitle>Labore, beatae fugit</DialogTitle>
+
+                <DialogBody>
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore, beatae fugit natus nihil facere sit
+                  laborum maiores quam deleniti neque iure vitae saepe ipsam optio.
+                </DialogBody>
+
+                <DialogActions>
+                  <Button onClick={() => setOpen(true)}>Button</Button>
+                  <PrimaryButton onClick={() => setOpen(true)}>PrimaryButton</PrimaryButton>
+                  <DangerButton onClick={() => setOpen(true)}>DangerButton</DangerButton>
+                </DialogActions>
+              </Dialog>
+            </>
+          ))}
+
+          {state(false, ([open, setOpen]) => (
+            <>
+              <button onClick={() => setOpen(true)}>no animation/transition</button>
+              <DemoDialog open={open} onClose={() => setOpen(false)} animation={false} />
+            </>
+          ))}
+
+          {state(false, ([open, setOpen]) => (
+            <>
+              <button onClick={() => setOpen(true)}>animation=fade</button>
+              <DemoDialog open={open} onClose={() => setOpen(false)} animation="fade" />
+            </>
+          ))}
+
+          {state(false, ([open, setOpen]) => (
+            <>
+              <button onClick={() => setOpen(true)}>animation=slide</button>
+              <DemoDialog open={open} onClose={() => setOpen(false)} animation="slide" />
+            </>
+          ))}
+
+          {state(false, ([open, setOpen]) => (
+            <>
+              <button onClick={() => setOpen(true)}>animation=slide duration=500</button>
+              <DemoDialog open={open} onClose={() => setOpen(false)} animation="slide" duration={500} />
+            </>
+          ))}
         </div>
         <div>
           <pre>{JSON.stringify(stack)}</pre>
@@ -217,7 +232,21 @@ export default function App() {
         </DialogActions>
       </Dialog>
 
-      <Dialog open={open5} onClose={() => setOpen5(false)} animated={false}>
+      <Dialog open={open5} onClose={() => setOpen5(false)}>
+        <DialogDismiss />
+        <DialogTitle>Dialog 5</DialogTitle>
+
+        <DialogBody>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore, beatae fugit natus nihil facere sit laborum
+          maiores quam deleniti neque iure vitae saepe ipsam optio.
+        </DialogBody>
+
+        <DialogActions>
+          <PrimaryButton onClick={() => setOpen5(false)}>Ok</PrimaryButton>
+        </DialogActions>
+      </Dialog>
+
+      <Dialog open={open5} onClose={() => setOpen5(false)}>
         <DialogDismiss />
         <DialogTitle>Dialog 5</DialogTitle>
 
@@ -232,4 +261,26 @@ export default function App() {
       </Dialog>
     </>
   );
+}
+
+function DemoDialog(props: React.ComponentProps<typeof Dialog>) {
+  return (
+    <Dialog {...props}>
+      <DialogDismiss />
+      <DialogTitle>Labore, beatae fugit</DialogTitle>
+
+      <DialogBody>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Labore, beatae fugit natus nihil facere sit laborum
+        maiores quam deleniti neque iure vitae saepe ipsam optio.
+      </DialogBody>
+
+      <DialogActions>
+        <PrimaryButton onClick={props.onClose}>Ok</PrimaryButton>
+      </DialogActions>
+    </Dialog>
+  );
+}
+
+function state<T>(initial: T, fn: (s: [T, React.Dispatch<React.SetStateAction<T>>]) => React.ReactNode) {
+  return fn(React.useState<T>(initial));
 }

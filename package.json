@@ -37,5 +37,8 @@
     "tsup": "^7.2.0",
     "typescript": "^5.2.2"
   },
-  "dependencies": {}
+  "dependencies": {
+    "classnames": "^2.3.2",
+    "goober": "^2.1.13"
+  }
 }
