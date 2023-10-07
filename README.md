@@ -79,7 +79,7 @@ import { confirm, alert, custom } from "react-imp";
 
 ### confirm
 
-**Types**
+> types
 
 ```tsx
 const confirm: (props: {
@@ -92,7 +92,7 @@ const confirm: (props: {
 }) => void;
 ```
 
-**Example**
+> example
 
 ```tsx
 confirm({
@@ -111,7 +111,7 @@ confirm({
 import { alert } from "react-imp";
 ```
 
-**Types**
+> types
 
 ```tsx
 const alert: (props: {
@@ -121,7 +121,7 @@ const alert: (props: {
 }) => void;
 ```
 
-**Example**
+> example
 
 ```tsx
 alert({
@@ -133,13 +133,13 @@ alert({
 
 ### custom
 
-**Types**
+> types
 
 ```tsx
 const custom: (props: (item: Omit<CallerComponentProps, "props">) => React.ReactNode) => void;
 ```
 
-**Example**
+> example
 
 ```tsx
 custom((item) => (
