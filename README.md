@@ -7,6 +7,10 @@ Pluggable easy to use imperative dialogs/callouts.
 - Lightweight.
 - Easy to use.
 
+<p align="center">
+  <img width="400px" src="./assets/react-imp-example.gif" />
+</p>
+
 ## Getting Started
 
 Install
