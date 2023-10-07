@@ -8,7 +8,7 @@ Pluggable easy to use imperative dialogs/callouts.
 - Easy to use.
 
 <p align="center">
-  <img width="400px" src="./assets/react-imp-example.gif" />
+  <img src="./assets/react-imp-example.gif" />
 </p>
 
 ## Getting Started
