@@ -1,5 +1,6 @@
 <p align="center">
-  <img src="./assets/logo-light.png" />
+  <img src="./assets/logo-light.png#gh-light-mode-only" />
+  <img src="./assets/logo-dark.png#gh-dark-mode-only" />
 </p>
 
 <p align="center">
@@ -10,8 +11,6 @@
   <img src="./assets/react-imp-example-light.gif#gh-light-mode-only" />
   <img src="./assets/react-imp-example-dark.gif#gh-dark-mode-only" />
 </p>
-
-Also
 
 - :accessibility: Accessible.
 - :pen: Customizable.
