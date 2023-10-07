@@ -1,6 +1,6 @@
 {
   "name": "react-imp",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "Easy to use imperative dialog callouts",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
