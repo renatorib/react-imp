@@ -1,15 +1,22 @@
-# React Imp
+<p align="center">
+  <img src="./assets/react-imp-light.gif#gh-light-mode-only" />
+  <img src="./assets/react-imp-dark.gif#gh-dark-mode-only" />
+</p>
 
-Pluggable easy to use imperative dialogs/callouts.
-
-- Accessible.
-- Customizable.
-- Lightweight.
-- Easy to use.
+<p align="center">
+<strong>react-imp</strong> is a pluggable and easy to use imperative dialogs/callouts.
+</p>
 
 <p align="center">
   <img src="./assets/react-imp-example.gif" />
 </p>
+
+Also
+
+- :accessibility: Accessible.
+- :pen: Customizable.
+- :feather: Lightweight.
+- :shipit: Easy to use.
 
 ## Getting Started
 
